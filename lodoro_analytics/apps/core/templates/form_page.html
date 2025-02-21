@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-4">
+  <h2 class="mb-4">Formulario Sencillo</h2>
+
+  <!-- Formulario -->
+  <form method="POST" class="row g-3">
+    {% csrf_token %}
+    
+    <!-- Campo de Nombre -->
+    <div class="col-md-6">
+      <label for="id_nombre" class="form-label">Nombre</label>
+      {{ form.nombre }}
+    </div>
+    
+    <!-- Campo de RUT -->
+    <div class="col-md-6">
+      <label for="id_rut" class="form-label">RUT</label>
+      {{ form.rut }}
+    </div>
+    
+    <!-- Botón Enviar -->
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+  </form>
+
+  <!-- Listado de entradas guardadas -->
+  {% if submissions %}
+  <div class="mt-4">
+    <h3>Listado de Datos Guardados</h3>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Nombre</th>
+          <th>RUT</th>
+          <th>Fecha de Envío</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in submissions %}
+        <tr>
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.rut }}</td>
+          <td>{{ item.submitted_at|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
